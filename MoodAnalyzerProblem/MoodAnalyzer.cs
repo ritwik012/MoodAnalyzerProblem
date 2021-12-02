@@ -4,11 +4,20 @@ namespace MoodAnalyzerProblem
 {
     public class MoodAnalyzer
     {
-        public string AnalyzeMood(string message)
+        public string message;
+        public MoodAnalyzer(string message)
+        {
+            this.message = message;
+        }
+        public string AnalyzeMood()
         {
             try
             {
-                if (message.Contains("Sad"))
+                if (this.message.Equals(string.Empty))
+                {
+                    throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.ENTERED_EMPTY, "Mood should not be Empty");
+                }
+                if (this.message.Contains("Sad"))
                 {
                     return "SAD";
                 }
@@ -17,7 +26,7 @@ namespace MoodAnalyzerProblem
                     return "HAPPY";
                 }
             }
-            catch (Exception)
+            catch (NullReferenceException)
             {
                 return "HAPPY";
             }
