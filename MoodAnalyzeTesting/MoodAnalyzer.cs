@@ -6,6 +6,10 @@ namespace MoodAnalyzerTesting
     {
         private string message;
 
+        public MoodAnalyzer()
+        {
+        }
+
         public MoodAnalyzer(string message)
         {
             this.message = message;

@@ -1,11 +1,13 @@
+
+using MoodAnalyzerProblem;
 using NUnit.Framework;
-using System;
-using System.Runtime.Serialization;
 
 namespace MoodAnalyzerTesting
 {
     public class Tests
     {
+        public object MoodAnalyzerFactory { get; private set; }
+
         [SetUp]
         public void Setup()
         {
@@ -52,7 +54,7 @@ namespace MoodAnalyzerTesting
             }
         }
         [Test]
-        public void GivenEMPTYMood_WhenAnalyze_ShouldThrowInvalidMoodException()
+        public void GivenEmptyMood_WhenAnalyze_ShouldThrowInvalidMoodException()
         {
             try
             {
@@ -65,25 +67,38 @@ namespace MoodAnalyzerTesting
                 Assert.AreEqual("Mood should not be Empty", e.Message);
             }
         }
-    }
-
-    [Serializable]
-    internal class MoodAnalyzerException : Exception
-    {
-        public MoodAnalyzerException()
+        [Test]
+        public void GivenMoodAnalyzerClassName_ShouldReturnMoodAnalyzerObject()
         {
+            object output = new MoodAnalyzer();
+            object obj = MoodAnalyzerFactory.CreateMoodAnalyse("MoodAnalyzerProblem.MoodAnalyzer", "MoodAnalyzer");
+            output.Equals(obj);
         }
-
-        public MoodAnalyzerException(string message) : base(message)
+        [Test]
+        public void GivenClassName_WhenImproper_ShouldThrowMoodAnalyzerException()
         {
+            string output = "Class not found";
+            try
+            {
+                object obj = MoodAnalyzerFactory.CreateMoodAnalyse("MoodAnalyzerProblem.MoodAnalyzing", "MoodAnalyzing");
+            }
+            catch (MoodAnalyzerException e)
+            {
+                Assert.AreEqual(output, e.Message);
+            }
         }
-
-        public MoodAnalyzerException(string message, Exception innerException) : base(message, innerException)
+        [Test]
+        public void GivenClass_WhenConstructorNotProper_ShouldThrowMoodAnalyzerException()
         {
-        }
-
-        protected MoodAnalyzerException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
+            string output = "Constructor not found";
+            try
+            {
+                object obj = MoodAnalyzerFactory.CreateMoodAnalyse("MoodAnalyzerProblem.MoodAnalyzer", "MoodAnalyzing");
+            }
+            catch (MoodAnalyzerException e)
+            {
+                Assert.AreEqual(output, e.Message);
+            }
         }
     }
 }
