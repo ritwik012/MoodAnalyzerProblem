@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 
 namespace MoodAnalyzerProblem
 {
@@ -7,11 +6,18 @@ namespace MoodAnalyzerProblem
     {
         public string AnalyzeMood(string message)
         {
-            if (message.Contains("Sad"))
+            try
             {
-                return "SAD";
+                if (message.Contains("Sad"))
+                {
+                    return "SAD";
+                }
+                else
+                {
+                    return "HAPPY";
+                }
             }
-            else
+            catch (Exception)
             {
                 return "HAPPY";
             }
